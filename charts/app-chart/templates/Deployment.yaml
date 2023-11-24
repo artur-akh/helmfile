@@ -1,0 +1,26 @@
+{{- if .Values.app -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-pod
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-pod
+    spec:
+      containers: 
+      - name: {{ .Release.Name }}-container
+        # image: arturakh/k8s:v5
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: http  
+{{- end -}}

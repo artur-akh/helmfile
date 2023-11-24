@@ -1,0 +1,8 @@
+apiVersion: v2
+name: app-test
+version: 1.0.0
+appVersion: 1.0.0
+description: "app-test deployment"
+maintainers:
+  - name: artur-akh
+    email: artur_akh@live.ru

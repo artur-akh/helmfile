@@ -1,0 +1,34 @@
+environments:
+  default:
+    values:
+      - common-values.yaml
+---
+
+releases:
+  - name: app-{{ .Values.clusterName }}
+    namespace: test  
+    chart: charts/app-chart
+    installed: true
+    values:
+      {{- if .Values | get "app" false }}      
+      - app: true
+      {{- end }}
+
+  - name: kedacore
+    namespace: keda-operator
+    version: 2.9.4
+    chart: kedacore/keda
+    installed: true
+    values:
+      - additionalLabels:
+          keda: main
+          {{- if .Values | get "test" false }}
+          test1: "true"
+          {{- end }}
+          {{- if .Values | get "test2" false }}
+          test2: "true"
+          {{- end }}
+      - operator:
+          replicaCount: 1
+      - metricsServer:
+          replicaCount: 1
